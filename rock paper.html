@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sairam</title>
+</head>
+<body>
+    <center>
+    <h1>Rock Paper Scissors Game</h1>
+    <p class="p11">Score: <span id="score">0</span></p>
+    <img id="rockImage" src="r1.png" alt="Rock">
+    <button onclick="playGame('Rock')">Rock</button>
+    <img id="paperImage" src="p1.png" alt="Paper">
+    <button onclick="playGame('Paper')">Paper</button>
+    <img id="scissorsImage" src="s1.png" alt="Scissors">
+    <button onclick="playGame('Scissors')">Scissors</button>
+    <p id="result"></p>
+</center>
+
+    <script>
+        let score = 0;
+
+        function updateScore() {
+            document.getElementById('score').innerText = score;
+        }
+
+        function playGame(playerChoice) {
+            const choices = ['Rock', 'Paper', 'Scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            const images = document.querySelectorAll('img');
+            images.forEach(img => img.style.border = ''); // Remove existing borders
+
+            // Apply a border directly to the computer's choice image
+            document.getElementById(`${computerChoice.toLowerCase()}Image`).style.border = '10px dotted blue';
+
+            let result = '';
+
+            if (playerChoice === computerChoice) {
+                result = 'It\'s a tie! You both chose ' + playerChoice + '.';
+            } else if (
+                (playerChoice === 'Rock' && computerChoice === 'Scissors') ||
+                (playerChoice === 'Scissors' && computerChoice === 'Paper') ||
+                (playerChoice === 'Paper' && computerChoice === 'Rock')
+            ) {
+                result = `You win! Computer chose ${computerChoice}.`;
+                score++; 
+            } else {
+                result = `Computer wins! Computer chose ${computerChoice}.`;
+                if (score > 0) {
+                    score--;
+                }
+            }
+
+            updateScore(); 
+            document.getElementById('result').innerText = result;
+        }
+
+        updateScore();
+    </script>
+</body>
+</html>
